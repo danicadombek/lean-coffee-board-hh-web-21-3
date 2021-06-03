@@ -1,14 +1,23 @@
+import { useState } from 'react'
 import styled from 'styled-components/macro'
 import Button from './Button'
+import PropTypes from 'prop-types'
+
+CreateCard.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+}
 
 export default function CreateCard({ onSubmit }) {
+  const textarea = useState(true)
+  const [input] = useState(true)
+
   return (
     <Wrapper>
       <ButtonBack>&lt; back</ButtonBack>
       <form onSubmit={handleSubmit}>
         <label>
           Text
-          <textarea name="text" rows="4" cols="20"></textarea>
+          <textarea onChange name="text" rows="4" cols="20"></textarea>
         </label>
         <label>
           Author
@@ -18,12 +27,17 @@ export default function CreateCard({ onSubmit }) {
       </form>
     </Wrapper>
   )
+
   function handleSubmit(event) {
     event.preventDefault()
     const form = event.target
     const textarea = form.elements.text
     const input = form.elements.author
-    onSubmit(textarea.value, input.value)
+    const text = textarea.value
+    const author = input.value
+    onSubmit(text, author)
+    form.reset()
+    textarea.focus()
   }
 }
 
