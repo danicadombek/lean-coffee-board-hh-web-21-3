@@ -1,9 +1,10 @@
 import styled from 'styled-components/macro'
+import Button from './Button'
 
 export default function CreateCard() {
   return (
     <Wrapper>
-      <button>&lt; back</button>
+      <Button>&lt; back</Button>
       <form>
         <label>
           Text
@@ -13,6 +14,7 @@ export default function CreateCard() {
           Author
           <input type="text"></input>
         </label>
+        <Button>Create card</Button>
       </form>
     </Wrapper>
   )

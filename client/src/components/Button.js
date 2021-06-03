@@ -3,16 +3,18 @@ import PropTypes from 'prop-types'
 
 const ButtonWrapper = styled.button`
   padding: 0.35em 1.2em;
-  border: 0.1em solid black;
   border-radius: 0.12em;
-  color: black;
   text-align: center;
   background-color: ${props => (props.isDisabled ? '#ccc' : 'white')};
+  color: ${props => (props.isDisabled ? 'white' : 'black')};
+  border: ${props =>
+    props.isDisabled ? '0.1em solid white' : '0.1em solid black'};
 `
 
 Button.propTypes = {
   isDisabled: PropTypes.bool,
   children: PropTypes.node,
+  onClick: PropTypes.func.isRequired,
 }
 
 function Button(props) {

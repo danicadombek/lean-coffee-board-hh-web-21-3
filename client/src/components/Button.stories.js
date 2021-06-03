@@ -11,8 +11,8 @@ Default.args = {
   children: 'Create card',
 }
 
-export const isDisabled = Template.bind({})
-isDisabled.args = {
+export const ButtonDisabled = Template.bind({})
+ButtonDisabled.args = {
   children: 'Create card',
-  disabled: true,
+  isDisabled: true,
 }
