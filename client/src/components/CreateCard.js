@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import Button from './Button'
 import PropTypes from 'prop-types'
@@ -8,8 +8,12 @@ CreateCard.propTypes = {
 }
 
 export default function CreateCard({ onSubmit }) {
-  const textarea = useState(true)
-  const [input] = useState(true)
+  const [isDisabled, setIsDisabled] = useState(true)
+  const [inputValue, setInputValue] = useState('')
+  const [textareaValue, setTextareaValue] = useState('')
+  useEffect(() => {
+    validateForm()
+  }, [inputValue, textareaValue])
 
   return (
     <Wrapper>
@@ -17,16 +21,43 @@ export default function CreateCard({ onSubmit }) {
       <form onSubmit={handleSubmit}>
         <label>
           Text
-          <textarea onChange name="text" rows="4" cols="20"></textarea>
+          <textarea
+            name="text"
+            value={isDisabled.text}
+            onChange={handleTextareaChange}
+            rows="4"
+            cols="20"
+          ></textarea>
         </label>
         <label>
           Author
-          <input name="author" type="text"></input>
+          <input
+            name="author"
+            value={isDisabled.author}
+            onChange={handleInputChange}
+            type="text"
+          ></input>
         </label>
-        <Button>Create card</Button>
+        <Button disabled={isDisabled}>Create card</Button>
       </form>
     </Wrapper>
   )
+
+  function validateForm() {
+    const disableButton =
+      inputValue.trim().length === 0 || textareaValue.trim().length === 0
+    setIsDisabled(disableButton)
+  }
+
+  function handleInputChange(event) {
+    const value = event.target.value
+    setInputValue(value)
+  }
+
+  function handleTextareaChange(event) {
+    const value = event.target.value
+    setTextareaValue(value)
+  }
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -37,6 +68,7 @@ export default function CreateCard({ onSubmit }) {
     const author = input.value
     onSubmit(text, author)
     form.reset()
+    setIsDisabled(true)
     textarea.focus()
   }
 }
